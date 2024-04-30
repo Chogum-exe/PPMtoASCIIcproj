@@ -76,9 +76,9 @@ char *fgetw(char *fill, int cap, FILE *file) {
  * @param colmax
  * @return char 
  */
-char col_ascii(int val, int colmin, int colmax) {
+char col_ascii(unsigned char val, unsigned char colmin, unsigned char colmax) {
   static const char *const light = "$#DR8mHXKAUbG0pV4d9h6PkqwSE2]ayjxY5Zoen[ult13If}C{iF|(7J)vTLs?z/*cr!+<>;=^,_:'-.`";
-  int i = 80*(val-colmin)/(colmax-colmin);
+  unsigned char i = (val-colmin)*80/(colmax-colmin);
   return light[i];
 }
 
