@@ -76,9 +76,9 @@ char *fgetw(char *fill, int cap, FILE *file) {
  * @param colmax
  * @return char 
  */
-char col_ascii(unsigned char val, unsigned char colmin, unsigned char colmax) {
+char col_ascii(int val, int colmin, int colmax) {
   static const char *const light = "$#DR8mHXKAUbG0pV4d9h6PkqwSE2]ayjxY5Zoen[ult13If}C{iF|(7J)vTLs?z/*cr!+<>;=^,_:'-.`";
-  unsigned char i = (val-colmin)*80/(colmax-colmin);
+  int i = (val-colmin)*80/(colmax-colmin);
   return light[i];
 }
 
@@ -138,11 +138,11 @@ int main(int argc, char *argv[]) {
   fclose(img);
 
   //We need to find the min color to make that black to give contrast
-  int colmin = 255;
-  int colmax = 0;
+  unsigned char colmin = 255;
+  unsigned char colmax = 0;
   for (int r=0; r<srows; ++r) {
     for (int c=0; c<scols; ++c) {
-      int col = pixels[r][c].red;
+      unsigned char col = pixels[r][c].red;
       if (col < colmin) colmin = col;
       if (col > colmax) colmax = col;
     }
@@ -151,8 +151,8 @@ int main(int argc, char *argv[]) {
   //Print the ascii rep of the pixels  
   for (int r=0; r<srows; ++r) {
     for (int c=0; c<scols; ++c) {
-      char c = col_ascii(pixels[r][c].red, colmin, colmax);
-      printf("%c ", c);
+      char ascii = col_ascii(pixels[r][c].red, colmin, colmax);
+      printf("%c ", ascii);
     }
     printf("\n");
   }
