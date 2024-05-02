@@ -1,3 +1,6 @@
 #!/bin/sh
 cc -o main imgTOascii.c
-./main ImageOfFolder.ppm > text.txt
+for file in *.ppm
+do
+  ./main $file > ${file%.*}.txt
+done
