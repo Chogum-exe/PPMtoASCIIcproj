@@ -116,26 +116,19 @@ int main(int argc, char *argv[]) {
   }
   //We are done reading the file so we can close it
   fclose(file);
-
-  FILE *img = fopen("output.ppm", "w");
-  fputs("P6\n85 80\n255\n", img);
   
   //Pixelate the image down
-  double blocksize = 52;
+  int scols = 100;
+  double blocksize = (double)cols / scols;
   int srows = ceil(rows/blocksize);
-  int scols = ceil(cols/blocksize);
   //Goes through blocks and sets greyscale pixels in top-left corner
   for (int r=0; r<srows; ++r) {
     for (int c=0; c<scols; ++c) {
-      Pixel t = pixels[r][c] = pix_gscale(avgcol(
+      pixels[r][c] = pix_gscale(avgcol(
         r*blocksize, c*blocksize, blocksize,
         blocksize, rows, cols, pixels));
-      fputc(t.red, img);
-      fputc(t.green, img);
-      fputc(t.blue, img);
     }
   }
-  fclose(img);
 
   //We need to find the min color to make that black to give contrast
   unsigned char colmin = 255;
